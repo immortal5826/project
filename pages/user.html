@@ -1,0 +1,438 @@
+<div class="user">
+  <div class="user_top">用户管理</div>
+  <div class="user_content">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item active" role="presentation">
+        <a class="nav-link" id="home-tab" data-toggle="tab" href="#admin"  aria-selected="true"><button type="button" id="a" class="btn btn-primary">管理员</button></a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="home-tab" data-toggle="tab" href="#editor"  aria-selected="true"><button type="button" id="b" class="btn btn-primary">编辑</button></a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#vip" aria-selected="false"><button type="button" id="c" class="btn btn-primary">用户</button></a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a style="margin-left: 750px;" class="nav-link" id="contact-tab" data-toggle="tab" href="" aria-selected="false"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@fat">新增</button></a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a  class="nav-link" id="contact-tab" data-toggle="tab" href="#find" aria-selected="false"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" data-whatever="@fat">查询</button></a>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade in active" id="admin">
+         <div class="table">
+          <table class="table  table-bordered table-striped">
+            <thead>
+              <tr>
+                <th scope="col">编号</th>
+                <th scope="col">用户名</th>
+                <th scope="col">真实姓名</th>
+                <th scope="col">email</th>
+                <th scope="col">状态</th>
+                <th scope="col">注册时间</th>
+                <th scope="col">操作</th>
+              </tr>
+            </thead>
+            <tbody id="one">
+            </tbody>
+          </table>
+         </div>
+      </div>
+      <div class="tab-pane fade" id="editor" >
+         <div class="table">
+          <table class="table  table-bordered table-striped">
+            <thead>
+              <tr>
+                <th scope="col">编号</th>
+                <th scope="col">用户名</th>
+                <th scope="col">真实姓名</th>
+                <th scope="col">email</th>
+                <th scope="col">状态</th>
+                <th scope="col">注册时间</th>
+                <th scope="col">操作</th>
+              </tr>
+            </thead>
+            <tbody id="two">
+            </tbody>
+          </table>
+         </div>
+      </div>
+      <div class="tab-pane fade" id="vip" >
+         <div class="table">
+          <table class="table  table-bordered table-striped">
+            <thead>
+              <tr>
+                <th scope="col">编号</th>
+                <th scope="col">用户名</th>
+                <th scope="col">真实姓名</th>
+                <th scope="col">email</th>
+                <th scope="col">状态</th>
+                <th scope="col">注册时间</th>
+                <th scope="col">操作</th>
+              </tr>
+            </thead>
+            <tbody id="three">
+
+            </tbody>
+          </table>
+         </div>
+      </div>
+     </div>
+     
+    </div>
+    <div class="tab-pane fade" id="find" style="display: none;">
+      <div class="tables">
+       <table class="table  table-bordered table-striped">
+         <thead>
+           <tr>
+             <th scope="col">编号</th>
+             <th scope="col">用户名</th>
+             <th scope="col">真实姓名</th>
+             <th scope="col">email</th>
+             <th scope="col">权限</th>
+             <th scope="col">状态</th>
+             <th scope="col">注册时间</th>
+             <th scope="col">操作</th>
+           </tr>
+         </thead>
+         <tbody id="four">
+
+         </tbody>
+       </table>
+      </div>
+    </div>
+  </div>
+  <!-- 模态框1开始 -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel modal">欢迎您,新用户</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!--表单开始-->
+          <form>
+            <div class="form-group">
+              <label class="col-form-label">用户名:</label>
+              <input type="text" name="username" class="form-control">
+            </div>
+  
+            <div class="form-group">
+              <label class="col-form-label">真实姓名:</label>
+              <input type="text" name="nickname" class="form-control">
+            </div>
+  
+            <div class="form-group">
+              <label class="col-form-label">email:</label>
+              <input type="text" name="email" class="form-control">
+            </div>
+  
+            <div class="form-group">
+              <label class="col-form-label">密码:</label>
+              <input type="text" name="password" class="form-control">
+            </div>
+  
+            <div class="form-group">
+              <label class="col-form-label">角色:</label>
+              <select id="role" class="form-control">
+                  <option value="admin">管理员</option>
+                  <option value="editor">编辑</option>
+                  <option value="user">用户</option>
+                </select>
+            </div>  
+          </form>
+          <!--表单结束-->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          <button type="button" id="four1" class="btn btn-primary" data-dismiss="modal">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--模态框1结束-->
+  <!-- 模态框2开始 -->
+  <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel modal">请输入id:</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!--表单开始-->
+          <form>
+            <div class="form-group">
+              <label class="col-form-label">id:</label>
+              <input type="text" name="id" class="form-control">
+            </div>
+          </form>
+          <!--表单结束-->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModa2" data-whatever="@fat" data-dismiss="modal">查询</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--模态框2结束-->
+</div>
+<script>
+  $(function(){
+    //改变用户状态
+    $('tbody').on({//事件代理
+      click:function(){
+        //拿到当前行id
+        var oid = $(this).closest('tr').find('.id').text()
+        //console.log(oid)
+      var status = ''
+       if($(this).text() =='禁用'){
+          status = false
+        }else{
+          status = true
+        }
+        var obj = {
+          id:oid,
+          status:status,
+        }
+        $.post(baseURL+'/manager/user/changeStatus',obj,function(res){
+          loadUser()
+        })
+      }
+    },'.edit')
+    //保存用户信息
+    $('button:contains("保存")').click(function(){
+      //$('#four1').modal('hide');
+      var username = $('input[name=username]').val()
+      var nickname = $('input[name=nickname]').val()
+      var password = $('input[name=password]').val()
+      var email = $('input[name=email]').val()
+      var role = $('#role').val()
+      var obj = {
+        username:username,//属性名:属性值
+        nickname:nickname,
+        password:password,
+        email:email,
+        role:role,
+      }
+      $.ajax({
+        url:baseURL + '/manager/user/reg',
+        method:'post',
+        data:obj,
+        success:function(res){
+         loadUser()
+        }
+      })
+    })
+
+    //查询用户
+    $('button:contains("查询")').click(function(){
+      $("#four").empty()
+      $('#myTabContent').css("display","none");
+      $('#find').css("display","block");
+      var oid = $('input[name=id]').val()
+    $.get(baseURL+'/manager/user/findUserById',{id:oid},function(res){
+      console.log(res)
+      
+              var status = ''
+              var btn = ''
+              if(res.data.enabled == true){
+                status = '正常'
+                btn = '禁用'
+              }else{
+                status = '禁用'
+                btn = '启用'
+              }
+              var row = $(`<tr>
+                <td scope="col" class='id'>`+res.data.id+`</td>
+                <td scope="col">`+res.data.username+`</td>
+                <td scope="col">`+res.data.nickname+`</td>
+                <td scope="col">`+res.data.email+`</td>
+                <td scope="col">`+res.data.role+`</td>
+                <td scope="col">`+status+`</td>
+                <td scope="col">`+dateParse(res.data.regtime)+`</td>
+                <td scope="col">
+                  <button type="button" class="del btn btn-danger">删除</button>
+                  <button type="button" class="edit btn btn-success">`+btn+`</button>
+                  </td>
+              </tr>`)
+              $('#four').append(row)
+            });
+            
+    
+})
+
+    //删除用户
+    $('tbody').on({//事件代理
+      click:function(){
+        //拿到当前行id
+        var oid = $(this).closest('tr').find('.id').text()
+        console.log(oid)
+        var obj = {
+          id:oid,
+        }
+        $.get(baseURL+'/manager/user/deleteUserById',obj,function(res){
+          loadUser()
+        })
+      }
+    },'.del')
+
+
+    /*
+    //模态框关闭
+    $('button:contains(关闭)').click(function(){
+      $('#modal').hide()
+    })
+    点击新增用户按钮
+    $('.addUser').click(function(){
+        $('#modal').show()
+        $('.modal-title').text('新增用户')
+    })*/
+
+    $('#a,#b,#c').click(function(){
+      $('#myTabContent').css("display","block");
+      $('#find').css("display","none");
+    })
+
+
+    //时间处理函数
+    function dateParse(dataString){
+        if(dataString){
+          let date = new Date(dataString);
+          let Y = date.getFullYear() + '-';
+          let M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+          let D = (date.getDate()< 10 ? '0'+date.getDate() : date.getDate())+' ';
+          let h = (date.getHours()< 10 ? '0'+date.getHours() : date.getHours())+ ':';
+          let m = (date.getMinutes()< 10 ? '0'+date.getMinutes() : date.getMinutes())+ ':';
+          let s = (date.getSeconds()< 10 ? '0'+date.getSeconds() : date.getSeconds());
+          return Y+M+D+h+m+s;  
+        }else{
+          return '';
+        }
+}
+    //加载用户
+    function loadUser(){  
+        $('tbody').empty( )//清空上一页表格
+        $.ajax({
+          url:baseURL + '/manager/user/findAllUser',
+          method:'get',
+          success:function(res){
+            
+            var admin = res.data.filter(function(item){//过滤出admin用户
+              return item.role == 'admin'
+            })
+            console.log(res)
+            var editor = res.data.filter(function(item){//过滤出编辑用户
+              return item.role == 'editor'
+            })
+            var user = res.data.filter(function(item){//过滤出普通用户
+              return item.role == 'user'
+            })
+            admin.forEach(function(item){
+              var status = ''
+              var btn = ''
+              if(item.enabled == true){
+                status = '正常'
+                btn = '禁用'
+              }else{
+                status = '禁用'
+                btn = '启用'
+              }
+              var row = $(`<tr>
+                <td scope="col" class='id'>`+item.id+`</td>
+                <td scope="col">`+item.username+`</td>
+                <td scope="col">`+item.nickname+`</td>
+                <td scope="col">`+item.email+`</td>
+                <td scope="col">`+status+`</td>
+                <td scope="col">`+dateParse(item.regtime)+`</td>
+                <td scope="col">
+                  <button type="button" class="del btn btn-danger">删除</button>
+                  <button type="button" class="edit btn btn-success">`+btn+`</button>
+                  </td>
+              </tr>`)
+              $('#one').append(row)
+            });
+
+            editor.forEach(function(item){
+              var status = ''
+              var btn = ''
+              if(item.enabled == true){
+                status = '正常'
+                btn = '禁用'
+              }else{
+                status = '禁用'
+                btn = '启用'
+              }
+              var row = $(`<tr>
+                <td scope="col" class='id'>`+item.id+`</td>
+                <td scope="col">`+item.username+`</td>
+                <td scope="col">`+item.nickname+`</td>
+                <td scope="col">`+item.email+`</td>
+                <td scope="col">`+status+`</td>
+                <td scope="col">`+dateParse(item.regtime)+`</td>
+                <td scope="col">
+                  <button type="button" class="del btn btn-danger">删除</button>
+                  <button type="button" class="edit btn btn-success">`+btn+`</button>
+                  </td>
+              </tr>`)
+              $('#two').append(row)
+            });
+
+            user.forEach(function(item){
+              var status = ''
+              var btn = ''
+              if(item.enabled == true){
+                status = '正常'
+                btn = '禁用'
+              }else{
+                status = '禁用'
+                btn = '启用'
+              }
+              var row = $(`<tr>
+                <td scope="col" class='id'>`+item.id+`</td>
+                <td scope="col">`+item.username+`</td>
+                <td scope="col">`+item.nickname+`</td>
+                <td scope="col">`+item.email+`</td>
+                <td scope="col">`+status+`</td>
+                <td scope="col">`+dateParse(item.regtime)+`</td>
+                <td scope="col">
+                  <button type="button" class="del btn btn-danger">删除</button>
+                  <button type="button" class="edit btn btn-success">`+btn+`</button>
+                  </td>
+              </tr>`)
+              $('#three').append(row)
+            });
+          }
+        })
+    }
+    
+    loadUser()
+  })
+</script>
+  <style>
+  .user_top{
+    /* background-color: pink; */
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+  }
+  .del{
+    color:black;
+    cursor:pointer;
+  }
+  .edit{
+    color:black;
+    cursor:pointer;
+  }
+  .table{
+    max-height: 450px;    /*调试高度*/
+    overflow: auto;
+  }
+  
+  </style>

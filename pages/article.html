@@ -1,0 +1,218 @@
+<div>
+  <div>
+    <button type="button"  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@fat">新增</button>
+  </div>
+  <div class="table">
+    <table class="table  table-bordered table-striped">
+      <thead>
+        <tr>
+          <th scope="col">编号</th>
+          <th scope="col">文章标题</th>
+          <th scope="col">所属栏目</th>
+          <th scope="col">作者</th>
+          <th scope="col">发布时间</th>
+          <th scope="col">阅读次数</th>
+          <th scope="col">状态</th>
+          <th scope="col">操作</th>
+        </tr>
+      </thead>
+      <tbody id="one">
+      </tbody>
+    </table>
+  </div>
+  <div class="page">
+  <nav aria-label="...">
+    <ul class="pagination pagination-lg">
+      
+    </ul>
+  </nav>
+  </div>
+  <!-- 模态框开始 -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel modal">欢迎添加新文章</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!--表单开始-->
+          <form>
+            <div class="form-group">
+              <label class="col-form-label">文章标题:</label>
+              <input type="text" name="title" class="form-control">
+            </div>
+  
+            <div class="form-group">
+              <label class="col-form-label">所属栏目:</label>
+              <input type="text" name="category" class="form-control">
+            </div>
+  
+            <div class="form-group">
+              <label class="col-form-label">作者:</label>
+              <input type="text" name="author" class="form-control">
+            </div>
+  
+            <div class="form-group">
+              <label class="col-form-label">发布时间:</label>
+              <input type="text" name="publishtime" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label class="col-form-label">阅读次数:</label>
+              <input type="text" name="readtimes" class="form-control">
+            </div>
+          </form>
+          <!--表单结束-->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          <button type="button" id="four" class="btn btn-primary" data-dismiss="modal">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--模态框结束-->
+</div>
+<script>
+  $(function(){
+
+     
+
+    //全局变量
+    var pagesize=9
+    loadArticle(0)
+    function loadArticle(page){
+       var obj={
+        page:page,
+        pageSize:pagesize
+      }
+      $.get(baseURL +'/manager/article/findArticle',obj,function(res){
+        $('.pagination').empty()
+        $('tbody').empty()
+       //console.log(res.data.list)
+        res.data.list.forEach(function(item){
+          //console.log(res)
+          var btn = ''
+              if(item.status == '审核通过'){
+      
+                btn = '取消'
+              }else{
+                
+                btn = '通过'
+              }
+          
+          var category=item.category?item.category.name:''
+          var rows = $(`<tr>
+          <td scope="col" class="id">`+item.id+`</td>
+          <td scope="col">`+item.title+`</td>
+          <td scope="col">`+category+`</td>
+          <td scope="col">`+item.author+`</td>
+          <td scope="col">`+item.publishtime+`</td>
+          <td scope="col">`+item.readtimes+`</td>
+          <td scope="col">`+item.status+`</td>
+          <td scope="col">
+            <button type="button" class="del btn btn-danger">删除</button>
+            <button type="button" class="edit btn btn-success">`+btn+`</button>
+          </td>
+        </tr>`)
+        $('tbody').append(rows)
+        })
+        var total = res.data.total //总数据量
+        var count = Math.ceil(total/pagesize)  //总页数
+        for(var i=1;i<=count;i++){
+          var row = $(`<li class="page-item"><a class="page-link" href="#">`+i+`</a></li>`)
+          $('.pagination').append(row)
+        }
+      })
+    }
+    //点击分页 事件代理
+    $('.pagination').on({
+      click:function(){
+      var page = $(this).text()-1
+      loadArticle(page)
+      }
+    },'.page-item')
+
+    //删除文章
+    $('tbody').on({//事件代理
+      click:function(){
+        //拿到当前行id
+        var oid = $(this).closest('tr').find('.id').text()
+        console.log(oid)
+        var obj = {
+          id:oid,
+          }
+          console.log(obj)
+      $.get(baseURL+'/manager/article/deleteArticleById',obj,function(res){
+        loadArticle()
+        })
+      }
+      
+    },'.del')
+
+    //改变用户状态
+    $('tbody').on({//事件代理
+      click:function(){
+        //拿到当前行id
+        var oid = $(this).closest('tr').find('.id').text()
+        //console.log(oid)
+      var status = ''
+       if($(this).text() =='通过'){
+          status = '审核通过'
+        }else{
+          status = '未审核'
+        }
+        var obj = {
+          id:oid,
+          status:status,
+        }
+        $.get(baseURL+'/manager/article/checkArticle',obj,function(res){
+          loadArticle(0)
+        })
+      }
+    },'.edit')
+
+     //保存用户信息
+     $('button:contains("保存")').click(function(){
+      //$('#four').modal('hide');
+      var title = $('input[name=title]').val()
+      var category = $('input[name=category]').val()
+      var author = $('input[name=author]').val()
+      var publishtime = $('input[name=publishtime]').val()
+      var readtimes = $('input[name=readtimes]').val()
+      var liststyle = true
+      var obj = {
+        title:title,//属性名:属性值
+        category:category,
+        author:author,
+        publishtime:publishtime,
+        readtimes:readtimes,
+        liststyle:liststyle
+      }
+      $.ajax({
+        url:baseURL + '/manager/article/saveOrUpdateArticle',
+        method:'post',
+        data:obj,
+        success:function(res){
+         loadArticle(0)
+        }
+      })
+    })
+
+   
+  })
+</script>
+<style>
+  .del{
+    color:black;
+    cursor:pointer;
+  }
+  .edit{
+    color:black;
+    cursor:pointer;
+  }
+
+</style>

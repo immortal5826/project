@@ -1,0 +1,182 @@
+<div>
+  <div class="search">
+  <select id="one" class="form-control form-control-lg">
+    <option value="">请选择</option>
+  </select>
+  <select id="two" class="form-control form-control-lg">
+    <!--<option value="">请选择</option>-->
+  </select>
+  </div>
+  <div class="table">
+    <table style="display:table;" class="table  table-bordered table-striped">
+      <thead>
+        <tr>
+          <th scope="col">编号</th>
+          <th scope="col">栏目名称</th>
+          <th scope="col">备注</th>
+          <th scope="col">操作</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+    <div>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@fat">新增</button>
+    </div>
+  </div>
+  <!-- 模态框开始 -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel modal">欢迎添加新栏目</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!--表单开始-->
+          <form>
+            <div class="form-group">
+              <label class="col-form-label">栏目名称:</label>
+              <input type="text" name="name" class="form-control">
+            </div>
+  
+            <div class="form-group">
+              <label class="col-form-label">备注:</label>
+              <input type="text" name="comment" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label class="col-form-label">父栏目编号:</label>
+              <input type="text" name="parentId" class="form-control">
+            </div>
+          </form>
+          <!--表单结束-->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          <button type="button" id="four" class="btn btn-primary" data-dismiss="modal">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--模态框结束-->
+</div>
+<script>
+  $(function(){
+    loadCategory()
+    function loadCategory(){
+      $.get(baseURL + '/manager/category/findAllCategory',function(res){
+        //父栏目
+        //console.log(res)
+        var oneCategory = res.data.filter(function(item){
+          return !item.parent     //过滤出父栏目为空
+        })
+        //console.log(oneCategory)
+        oneCategory.forEach(function(item){
+          var row = $('<option value="'+item.id+'">'+item.name+'</option>')
+          $('#one').append(row)
+        })
+      })
+    }
+    //根据一级栏目筛选二级栏目
+    function loadTwoCategory(oid){
+      $('#two').empty()
+      $.get(baseURL+'/manager/category/findCategoryByParentId',{id:oid},function(res){
+        //console.log(res)
+        res.data.forEach(function(item){
+          var row = $('<option value="'+item.id+'">'+item.name+'</option>')
+          $('#two').append(row)
+        })
+      })
+    }
+
+    
+    function loadThreeCategory(name){
+      
+      $.get(baseURL+'/manager/category/findCategoryByCategoryname',{name:name},function(res){
+        console.log(res)
+          var btn = ''
+          var rows = $(`<tr>
+          <td scope="col">`+res.data.id+`</td>
+          <td scope="col">`+res.data.name+`</td>
+          <td scope="col">`+res.data.comment+`</td>
+          <td scope="col">
+            <span class='del'>删除</span>
+            <span class='edit'>`+btn+`</span>
+          </td>
+        </tr>`)
+        $('tbody').append(rows) 
+        
+     })
+     $('tbody').empty()
+  }
+
+  
+    
+    //监听第一个下拉框
+    $('#one').change(function(){
+      if($(this).val()){
+        $('#two').css('display','block')
+        loadTwoCategory($(this).val())
+      }else{
+        $('#two').css('display','none')
+      }
+    })
+
+    $('#one').change(function(){
+      console.log($(this).find("option:selected").text())
+      if($(this).find("option:selected").text()){
+       // $('tbody').css('display','table')
+        loadThreeCategory($(this).find("option:selected").text())
+      }else{
+        $('#two').css('display','none')
+      }
+    })
+
+    $('#two').change(function(){
+      if($(this).find("option:selected").text()){
+       // $('tbody').css('display','table')
+        loadThreeCategory($(this).find("option:selected").text())
+      }else{
+        $('#two').css('display','none')
+      }
+    })
+
+    //保存用户信息
+    $('button:contains("保存")').click(function(){
+      //$('#four').modal('hide');
+      var name = $('input[name=name]').val()
+      var comment = $('input[name=comment]').val()
+      var no = ''
+      var parentId = $('input[name=parentId]').val()
+      var obj = {
+        name:name,//属性名:属性值
+        comment:comment,
+        no:no,
+        parentId:parentId,
+      }
+      $.ajax({
+        url:baseURL + '/manager/category/saveOrUpdateCategory',
+        method:'post',
+        data:obj,
+        success:function(res){
+         loadThreeCategory()
+        }
+      })
+    })
+
+  })
+</script>
+<style>
+  #one,#two{
+    width:200px;
+    float: left;
+    margin:10px;
+  }
+  #two{
+    display: none;
+  }
+</style>
